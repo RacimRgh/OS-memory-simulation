@@ -123,30 +123,25 @@ void show_memory(Memory m)
     {
         if(start_color() == OK)
         {
+            init_pair(1, COLOR_GREEN, COLOR_GREEN);
+            init_pair(2, COLOR_RED, COLOR_RED);
             while(l)
             {
                 /* init_pair: numéro de la paire (avant-plan, arrière-plan)  */
-                init_pair(1, COLOR_GREEN, COLOR_GREEN);
-                init_pair(2, COLOR_RED, COLOR_RED);
 
-                // printw("\n@ %d ->", l->data.start);
-                /* newwin(height, width, starty, startx); */
-                // win = newwin(1, l->data.size/10, i*2, 0);
+                printw("\n@ %d", l->data.start);
+                win= newwin(1, l->data.size/10, 2*i, 0);
+                box(win, ACS_VLINE, ACS_HLINE);
                 if(l->data.state == 'F')
-                {
-                    win= newwin(1,l->data.size/10,2*i,0);
-                    box(win, 1, 50);
+                {  
                     wbkgd(win, COLOR_PAIR(1));
-                    mvprintw(i*2,l->data.size/10,"%d Ko",l->data.size);
+                    mvprintw(i*2, l->data.size/10, "%d Ko", l->data.size);
                 }
                 else
                 {
-                    win= newwin(1,l->data.size/10,2*i,0);
-                    box(win,1,1);
                     wbkgd(win, COLOR_PAIR(2));
-                    mvprintw(i*2,l->data.size/10,"%d Ko <PROCESS %d RUNNING>",l->data.size,l->data.proc.id);
+                    mvprintw(i*2, l->data.size/10, "%d Ko <PROCESS %d RUNNING>", l->data.size, l->data.proc.id);
                 }
-                // refresh();
                 wrefresh(win);
                 i++;
                 l = l->next;
@@ -159,5 +154,4 @@ void show_memory(Memory m)
         printf("Your terminal does not support color\n");
         exit(1);
     }
-    getch();
 }

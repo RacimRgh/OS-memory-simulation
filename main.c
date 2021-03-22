@@ -2,6 +2,16 @@
 #include "./headers/process.h"
 #include "./headers/menu.h"
 
+
+#define SIZE_MAIN_MENU 4
+char *main_menu[] = 
+{
+        "Initialiser la mémoire avec le fichier 'memory.txt'",
+        "Initialiser la mémoire en une seule partition.",
+        "Afficher la mémoire.",
+        "Quitter."
+};
+
 void main()
 {
     initscr();
@@ -12,26 +22,27 @@ void main()
     Memory m = NULL, l;
     int init = 0;
     int choice;
-    char *choices[] = {
-        "Initialiser la mémoire",
-        "Afficher la mémoire",
-        "Quitter"
-    };
     do 
     {
-        choice = menu(2, choices, SIZE_CHOICES, "Menu principal");
+        choice = menu(2, main_menu, SIZE_MAIN_MENU, "Menu principal");
         initscr();
         switch (choice)
         {
         case 0:
         {
-
             init = initMemoryWpartitions(10000, &m);
-            message("Mémoire initialisé!", 0, 10);
+            message("Mémoire initialisé depuis le fichier memory.txt!", 10, 10);
             getch();
             break;
         }
         case 1:
+        {
+            init = initMemory(10000, &m);
+            message("Mémoire initialisé!", 10, 10);
+            getch();
+            break;
+        }
+        case 2:
         {
             if (init)
             {
@@ -43,7 +54,7 @@ void main()
             getch(); 
             break;
         }
-        case 2:
+        case 3:
         {
             choice = 0;
             break;

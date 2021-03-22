@@ -12,7 +12,7 @@
  * \param nBytes nombre d'octets à allouer
  * \return 0 en cas d'erreur, la taille allouée sinon
  * */
-int initMemory(int nBytes)
+int initMemory(int nBytes, Memory *m)
 {
     Memory l = NULL;
     Partition x;
@@ -24,6 +24,7 @@ int initMemory(int nBytes)
         x.state = 'F';
         l->data = x;
         l->next = NULL;
+        *m = l;
         return nBytes;
     }
     else
@@ -35,22 +36,23 @@ int initMemory(int nBytes)
  * \param nBytes nombre d'octets max à allouer
  * \return 0 en cas d'erreur, la taille allouée sinon
  * */
-int initMemoryWpartitions(int nBytes)
+int initMemoryWpartitions(int nBytes, Memory *m)
 {
     Memory l = NULL, p = NULL, q = NULL;
     Partition x;
     int taille = 0;
     FILE *f = NULL;
-    f = fopen("../input_files/memory.txt", "r");
+    f = fopen("./input_files/memory.txt", "r");
 
     if (f)
     {
         while (fscanf(f, "%d %d %c", &x.start, &x.size, &x.state) != EOF && taille < nBytes)
         {
             taille += x.size; //la taille de la ram
-
+            
             if (!l)
-            { //first partition
+            {
+                /* Première partition */
                 l = (Memory)calloc(1, sizeof(Partition));
                 l->data = x;
                 p = l;
@@ -58,6 +60,7 @@ int initMemoryWpartitions(int nBytes)
             }
             else
             {
+                /* Liste des partitions*/
                 q = (Memory)calloc(1, sizeof(Partition));
                 q->data = x;
                 p->next = q;
@@ -65,11 +68,14 @@ int initMemoryWpartitions(int nBytes)
             }
         }
         q->next = NULL;
+        *m = l;
         fclose(f);
+        return taille;
     }
     else
     {
-        puts("Impossible d'ouvrir le fichier MEMO.txt");
+        perror((const char*)f);
+        return 0;
     }
 }
 
@@ -102,4 +108,56 @@ int myfree(void *p)
 int freeMemory()
 {
     return 0;
+}
+
+/**
+ * \fn void show_memory(Memory m)
+ * \brief Fonction qui affiche la mémoire sous forme de blocs rouge/vert en utilisant la librairie ncurses  
+ * */
+void show_memory(Memory m)
+{
+    WINDOW *win;
+    Memory l = m;
+    int i = 0;
+    if(has_colors())
+    {
+        if(start_color() == OK)
+        {
+            while(l)
+            {
+                /* init_pair: numéro de la paire (avant-plan, arrière-plan)  */
+                init_pair(1, COLOR_GREEN, COLOR_GREEN);
+                init_pair(2, COLOR_RED, COLOR_RED);
+
+                // printw("\n@ %d ->", l->data.start);
+                /* newwin(height, width, starty, startx); */
+                // win = newwin(1, l->data.size/10, i*2, 0);
+                if(l->data.state == 'F')
+                {
+                    win= newwin(1,l->data.size/10,2*i,0);
+                    box(win, 1, 50);
+                    wbkgd(win, COLOR_PAIR(1));
+                    mvprintw(i*2,l->data.size/10,"%d Ko",l->data.size);
+                }
+                else
+                {
+                    win= newwin(1,l->data.size/10,2*i,0);
+                    box(win,1,1);
+                    wbkgd(win, COLOR_PAIR(2));
+                    mvprintw(i*2,l->data.size/10,"%d Ko <PROCESS %d RUNNING>",l->data.size,l->data.proc.id);
+                }
+                // refresh();
+                wrefresh(win);
+                i++;
+                l = l->next;
+            }
+        }
+    }
+    else
+    {
+        endwin();
+        printf("Your terminal does not support color\n");
+        exit(1);
+    }
+    getch();
 }

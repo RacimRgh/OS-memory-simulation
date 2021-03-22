@@ -8,6 +8,10 @@
 #include "process.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <curses.h>
+#include <time.h>
+#include <unistd.h>
+#include <string.h>
 
 /**
 * \struct Partition
@@ -33,10 +37,11 @@ typedef struct elt
 typedef elt *Memory;
 
 //------------- PROTOTYPES ---------------//
-int initMemoryWpartitions(int nBytes);
-int initMemory(int nBytes);
+int initMemoryWpartitions(int nBytes, Memory *m);
+int initMemory(int nBytes, Memory *m);
 void *myAlloc(int nBytes);
 int myfree(void *p);
 int freeMemory();
+void show_memory(Memory m);
 
 #endif

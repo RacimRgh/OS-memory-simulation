@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/MEMORY.dir/main.c.o CMakeFiles/MEMORY.dir/src/memory.c.o CMakeFiles/MEMORY.dir/src/process.c.o  -o MEMORY  -lcurses 

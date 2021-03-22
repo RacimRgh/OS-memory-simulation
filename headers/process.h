@@ -1,9 +1,15 @@
+/**
+ * \file process.h
+ * \brief En-tête contenant les déclarations et prototypes concernants les processus 
+ * */
+
 #ifndef PROCESS_HEADER
 #define PROCESS_HEADER
 
 
 //---------STRUCTURES DEFINITIONS---------//
-//process structure
+
+// Process structure
 typedef struct process {
     int id;
     int time;

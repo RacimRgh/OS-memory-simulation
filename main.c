@@ -2,15 +2,17 @@
 #include "./headers/process.h"
 #include "./headers/menu.h"
 
-
-#define SIZE_MAIN_MENU 4
-char *main_menu[] = 
-{
+#define SIZE_MAIN_MENU 8
+char *main_menu[] =
+    {
         "Initialiser la mémoire avec le fichier 'memory.txt'",
         "Initialiser la mémoire en une seule partition.",
+        "Initialiser la pile de processus.",
+        "Charger tout les processus.",
+        "Charger les processus un par un.",
+        "Allouer un espace",
         "Afficher la mémoire.",
-        "Quitter."
-};
+        "Quitter."};
 
 void main()
 {
@@ -22,7 +24,7 @@ void main()
     Memory m = NULL, l;
     int init = 0;
     int choice;
-    do 
+    do
     {
         choice = menu(2, main_menu, SIZE_MAIN_MENU, "Menu principal");
         initscr();
@@ -49,23 +51,35 @@ void main()
                 show_memory(m);
             }
             else
-                printf("Initialiser la mémoire d'abord");
-            
-            getch(); 
+                message("Initialisez d'abord la mémoire!", 10, 10);
+
+            getch();
             break;
         }
         case 3:
         {
-            choice = 0;
             break;
         }
-        
+        case 4:
+        {
+            break;
+        }
+        case 5:
+        {
+            break;
+        }
+        case 6:
+        {
+            choice = -1;
+            break;
+        }
+
         default:
             break;
         }
         del_message();
         refresh();
-    }while(choice != -1);
+    } while (choice != -1);
 
     getch();
     endwin();

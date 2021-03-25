@@ -19,7 +19,7 @@
 * */
 typedef struct Partition
 {
-    process proc; /*!< Processus qui occupe la partition, NULL si aucun. */
+    Process proc; /*!< Processus qui occupe la partition, NULL si aucun. */
     int start;    /*!< Adresse de début de la partition. */
     int size;     /*!< Taille de la partition en bytes. */
     char state;   /*!< Etat de la partition: F pour free=libre, U pour used=utilisée. */
@@ -39,7 +39,7 @@ typedef elt *Memory;
 //------------- PROTOTYPES ---------------//
 int initMemoryWpartitions(int nBytes, Memory *m);
 int initMemory(int nBytes, Memory *m);
-void *myAlloc(int nBytes);
+void *myAlloc(int nBytes, Memory m);
 int myfree(void *p);
 int freeMemory();
 void show_memory(Memory m);

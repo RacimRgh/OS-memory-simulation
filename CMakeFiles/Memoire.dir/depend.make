@@ -13,6 +13,7 @@ CMakeFiles/Memoire.dir/src/memory.c.o: src/memory.c
 CMakeFiles/Memoire.dir/src/menu.c.o: headers/menu.h
 CMakeFiles/Memoire.dir/src/menu.c.o: src/menu.c
 
+CMakeFiles/Memoire.dir/src/process.c.o: headers/memory.h
 CMakeFiles/Memoire.dir/src/process.c.o: headers/process.h
 CMakeFiles/Memoire.dir/src/process.c.o: src/process.c
 

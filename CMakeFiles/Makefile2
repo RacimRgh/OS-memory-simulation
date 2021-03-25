@@ -64,7 +64,8 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/Memoire.dir/clean
-
+clean: CMakeFiles/docs.dir/clean
+	$(CMAKE_COMMAND) -P CMakeFiles/cmake_directory_clean.cmake
 .PHONY : clean
 
 #=============================================================================
@@ -93,6 +94,33 @@ Memoire: CMakeFiles/Memoire.dir/rule
 CMakeFiles/Memoire.dir/clean:
 	$(MAKE) -f CMakeFiles/Memoire.dir/build.make CMakeFiles/Memoire.dir/clean
 .PHONY : CMakeFiles/Memoire.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/docs.dir
+
+# All Build rule for target.
+CMakeFiles/docs.dir/all:
+	$(MAKE) -f CMakeFiles/docs.dir/build.make CMakeFiles/docs.dir/depend
+	$(MAKE) -f CMakeFiles/docs.dir/build.make CMakeFiles/docs.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=6 "Built target docs"
+.PHONY : CMakeFiles/docs.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/docs.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/docs.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles 0
+.PHONY : CMakeFiles/docs.dir/rule
+
+# Convenience name for target.
+docs: CMakeFiles/docs.dir/rule
+
+.PHONY : docs
+
+# clean rule for target.
+CMakeFiles/docs.dir/clean:
+	$(MAKE) -f CMakeFiles/docs.dir/build.make CMakeFiles/docs.dir/clean
+.PHONY : CMakeFiles/docs.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

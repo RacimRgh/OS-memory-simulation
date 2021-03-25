@@ -1,41 +1,27 @@
 /**
- * \file process.h
+ * \file Process.h
  * \brief En-tête contenant les déclarations et prototypes concernants les processus 
  * */
 
 #ifndef PROCESS_HEADER
 #define PROCESS_HEADER
+#include "memory.h"
 
-
-//---------STRUCTURES DEFINITIONS---------//
-
-// Process structure
-typedef struct process {
+/**
+* \struct Process
+* \brief Structure d'un processus à insérer dans une partition
+* */
+typedef struct Process
+{
     int id;
     int time;
     int startTime;
     int size;
     int priority;
-} process;
+} Process;
 
-// Queue structure
-typedef struct eltFile {
-    process data;
-    struct eltFile *next;
-} eltFile;
-
-typedef struct File {
-    eltFile *h, *t;
-} File;
-
-// Stack structure
-typedef struct eltPile {
-    File f;
-    struct eltPile *suiv;
-} eltPile;
-typedef eltPile *Pile;
-
-//------------- PROTOTYPES ---------------//
-
+// Memory first_fit(Memory m, Process p);
+// Memory best_fit(Memory m, Process p);
+// Memory worst_fit(Memory m, Process p);
 
 #endif

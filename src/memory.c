@@ -49,7 +49,7 @@ int initMemoryWpartitions(int nBytes, Memory *m)
         while (fscanf(f, "%d %d %c", &x.start, &x.size, &x.state) != EOF && taille < nBytes)
         {
             taille += x.size; //la taille de la ram
-            
+
             if (!l)
             {
                 /* Première partition */
@@ -74,7 +74,7 @@ int initMemoryWpartitions(int nBytes, Memory *m)
     }
     else
     {
-        perror((const char*)f);
+        perror((const char *)f);
         return 0;
     }
 }
@@ -85,7 +85,7 @@ int initMemoryWpartitions(int nBytes, Memory *m)
  * \param nBytes nombre d'octets de la partition
  * \return -1 en cas d'erreur, la taille allouée sinon
  * */
-void *myAlloc(int nBytes)
+void *myAlloc(int nBytes, Memory m)
 {
 }
 
@@ -119,28 +119,28 @@ void show_memory(Memory m)
     WINDOW *win;
     Memory l = m;
     int i = 0;
-    if(has_colors())
+    if (has_colors())
     {
-        if(start_color() == OK)
+        if (start_color() == OK)
         {
             init_pair(1, COLOR_GREEN, COLOR_GREEN);
             init_pair(2, COLOR_RED, COLOR_RED);
-            while(l)
+            while (l)
             {
                 /* init_pair: numéro de la paire (avant-plan, arrière-plan)  */
 
                 printw("\n@ %d", l->data.start);
-                win= newwin(1, l->data.size/10, 2*i, 0);
+                win = newwin(1, l->data.size / 10, 2 * i, 0);
                 box(win, ACS_VLINE, ACS_HLINE);
-                if(l->data.state == 'F')
-                {  
+                if (l->data.state == 'F')
+                {
                     wbkgd(win, COLOR_PAIR(1));
-                    mvprintw(i*2, l->data.size/10, "%d Ko", l->data.size);
+                    mvprintw(i * 2, l->data.size / 10, "%d Ko", l->data.size);
                 }
                 else
                 {
                     wbkgd(win, COLOR_PAIR(2));
-                    mvprintw(i*2, l->data.size/10, "%d Ko <PROCESS %d RUNNING>", l->data.size, l->data.proc.id);
+                    mvprintw(i * 2, l->data.size / 10, "%d Ko <PROCESS %d RUNNING>", l->data.size, l->data.proc.id);
                 }
                 wrefresh(win);
                 i++;
@@ -154,4 +154,35 @@ void show_memory(Memory m)
         printf("Your terminal does not support color\n");
         exit(1);
     }
+}
+
+/**
+ * \fn void *new_partition(int nBytes, Memory m)
+ * \brief Fonction qui crée une nouvelle partition. Elle sera utilisé après l'allocation d'un espace pour garder le résidu. 
+ * */
+void *new_partition(int nBytes, Memory m)
+{
+    Memory p = m, q;
+    int start;
+    if (nBytes > 0)
+    {
+        if (!m)
+            initMemory(nBytes, &m);
+        else
+        {
+            while (p)
+            {
+                q = p;
+                start = p->data.start + p->data.size;
+                p = p->next;
+            }
+            q->next = malloc(sizeof(Partition));
+            q = q->next;
+            q->data.size = nBytes;
+            q->data.state = 'F';
+            q->data.start = start;
+            q->next = NULL;
+        }
+    }
+    return m;
 }

@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/file_proc.h
+process.h
+/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/process.h
+stdlib.h
+-
+stdio.h
+-
+unistd.h
+-
+curses.h
+-
+
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/memory.h
 process.h
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/process.h
@@ -27,8 +39,6 @@ curses.h
 -
 
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/process.h
-memory.h
-/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/memory.h
 
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/main.c
 ./headers/memory.h
@@ -37,12 +47,12 @@ memory.h
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/process.h
 ./headers/menu.h
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/menu.h
+./headers/file_proc.h
+/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/file_proc.h
+stdio.h
+-
 
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/memory.c
 ../headers/memory.h
 /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/memory.h
-
-/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c
-../headers/process.h
-/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/headers/process.h
 

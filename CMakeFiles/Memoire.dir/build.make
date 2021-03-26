@@ -83,22 +83,9 @@ CMakeFiles/Memoire.dir/src/menu.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Memoire.dir/src/menu.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/menu.c -o CMakeFiles/Memoire.dir/src/menu.c.s
 
-CMakeFiles/Memoire.dir/src/process.c.o: CMakeFiles/Memoire.dir/flags.make
-CMakeFiles/Memoire.dir/src/process.c.o: src/process.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Memoire.dir/src/process.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Memoire.dir/src/process.c.o   -c /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c
-
-CMakeFiles/Memoire.dir/src/process.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Memoire.dir/src/process.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c > CMakeFiles/Memoire.dir/src/process.c.i
-
-CMakeFiles/Memoire.dir/src/process.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Memoire.dir/src/process.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c -o CMakeFiles/Memoire.dir/src/process.c.s
-
 CMakeFiles/Memoire.dir/src/memory.c.o: CMakeFiles/Memoire.dir/flags.make
 CMakeFiles/Memoire.dir/src/memory.c.o: src/memory.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Memoire.dir/src/memory.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Memoire.dir/src/memory.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Memoire.dir/src/memory.c.o   -c /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/memory.c
 
 CMakeFiles/Memoire.dir/src/memory.c.i: cmake_force
@@ -109,25 +96,53 @@ CMakeFiles/Memoire.dir/src/memory.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Memoire.dir/src/memory.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/memory.c -o CMakeFiles/Memoire.dir/src/memory.c.s
 
+CMakeFiles/Memoire.dir/src/process.c.o: CMakeFiles/Memoire.dir/flags.make
+CMakeFiles/Memoire.dir/src/process.c.o: src/process.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Memoire.dir/src/process.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Memoire.dir/src/process.c.o   -c /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c
+
+CMakeFiles/Memoire.dir/src/process.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Memoire.dir/src/process.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c > CMakeFiles/Memoire.dir/src/process.c.i
+
+CMakeFiles/Memoire.dir/src/process.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Memoire.dir/src/process.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/process.c -o CMakeFiles/Memoire.dir/src/process.c.s
+
+CMakeFiles/Memoire.dir/src/file_proc.c.o: CMakeFiles/Memoire.dir/flags.make
+CMakeFiles/Memoire.dir/src/file_proc.c.o: src/file_proc.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/Memoire.dir/src/file_proc.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Memoire.dir/src/file_proc.c.o   -c /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/file_proc.c
+
+CMakeFiles/Memoire.dir/src/file_proc.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Memoire.dir/src/file_proc.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/file_proc.c > CMakeFiles/Memoire.dir/src/file_proc.c.i
+
+CMakeFiles/Memoire.dir/src/file_proc.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Memoire.dir/src/file_proc.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/src/file_proc.c -o CMakeFiles/Memoire.dir/src/file_proc.c.s
+
 # Object files for target Memoire
 Memoire_OBJECTS = \
 "CMakeFiles/Memoire.dir/main.c.o" \
 "CMakeFiles/Memoire.dir/src/menu.c.o" \
+"CMakeFiles/Memoire.dir/src/memory.c.o" \
 "CMakeFiles/Memoire.dir/src/process.c.o" \
-"CMakeFiles/Memoire.dir/src/memory.c.o"
+"CMakeFiles/Memoire.dir/src/file_proc.c.o"
 
 # External object files for target Memoire
 Memoire_EXTERNAL_OBJECTS =
 
 Memoire: CMakeFiles/Memoire.dir/main.c.o
 Memoire: CMakeFiles/Memoire.dir/src/menu.c.o
-Memoire: CMakeFiles/Memoire.dir/src/process.c.o
 Memoire: CMakeFiles/Memoire.dir/src/memory.c.o
+Memoire: CMakeFiles/Memoire.dir/src/process.c.o
+Memoire: CMakeFiles/Memoire.dir/src/file_proc.c.o
 Memoire: CMakeFiles/Memoire.dir/build.make
 Memoire: /usr/lib/x86_64-linux-gnu/libcurses.so
 Memoire: /usr/lib/x86_64-linux-gnu/libform.so
 Memoire: CMakeFiles/Memoire.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Memoire"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable Memoire"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Memoire.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

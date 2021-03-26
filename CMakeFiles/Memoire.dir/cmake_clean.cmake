@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Memoire.dir/main.c.o"
+  "CMakeFiles/Memoire.dir/src/file_proc.c.o"
   "CMakeFiles/Memoire.dir/src/memory.c.o"
   "CMakeFiles/Memoire.dir/src/menu.c.o"
   "CMakeFiles/Memoire.dir/src/process.c.o"

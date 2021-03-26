@@ -5,7 +5,7 @@
 
 #ifndef PROCESS_HEADER
 #define PROCESS_HEADER
-#include "memory.h"
+// #include "memory.h"
 
 /**
 * \struct Process
@@ -19,9 +19,5 @@ typedef struct Process
     int size;
     int priority;
 } Process;
-
-// Memory first_fit(Memory m, Process p);
-// Memory best_fit(Memory m, Process p);
-// Memory worst_fit(Memory m, Process p);
 
 #endif

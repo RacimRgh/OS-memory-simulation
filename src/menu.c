@@ -25,7 +25,7 @@ void del_message() {
  * \param[in] x Numéro de colonne où afficher
  * */
 void message(char *s, int y, int x) {
-    WINDOW *win = newwin(3, 30, y, x);
+    WINDOW *win = newwin(3, 80, y, x);
     box(win, 0, 0);
     wattron(win, A_BOLD | A_ITALIC);
     mvwprintw(win, 1, 1, "%s", s);

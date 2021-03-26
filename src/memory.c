@@ -87,6 +87,65 @@ int initMemoryWpartitions(int nBytes, Memory *m)
  * */
 void *myAlloc(int nBytes, Memory m)
 {
+    
+}
+/**
+ * \fn void * myAllocProc (int nBytes)
+ * \brief Fonction d'allocation d'une partition dans la mémoire
+ * \param nBytes nombre d'octets de la partition
+ * \return -1 en cas d'erreur, la taille allouée sinon
+ * */
+void *myAllocProc(int nBytes, Memory m, Process p, Memory (*fit_function_pointer)(Memory, Process))
+{
+    Memory address = fit_function_pointer(m, p);
+    int diff;
+    if (address)
+    {
+        if (address->data.state != 'F')
+            puts("Erreur adresse renvoyée non libre");
+        else
+        {
+            address->data.state = 'U';
+            address->data.proc = p;
+            address->data.proc.time += time(NULL);
+            diff = address->data.size - p.size;
+            address->data.size = p.size;
+            new_partition(diff, &m, address);
+        }
+    }
+    return m;
+}
+
+/**
+ * \fn void *new_partition(int nBytes, Memory m)
+ * \brief Fonction qui crée une nouvelle partition. Elle sera utilisé après l'allocation d'un espace pour garder le résidu. 
+ * */
+void new_partition(int nBytes, Memory *m, Memory address)
+{
+    Memory p = *m, q;
+    int start;
+    if (nBytes > 0)
+    {
+        if (*m == address)
+        {
+            q = malloc(sizeof(Partition));
+            q->next = (*m)->next;
+            (*m)->next = q;
+            q->data.size = nBytes;
+            q->data.state = 'F';
+            q->data.start = (*m)->data.size;
+        }
+            // initMemory(nBytes, &m);
+        else
+        {
+            q = malloc(sizeof(Partition));
+            q->data.size = nBytes;
+            q->data.start = address->data.start + address->data.size;
+            q->data.state = 'F';
+            q->next = address->next;
+            address->next = q;
+        }
+    }
 }
 
 /**
@@ -156,33 +215,36 @@ void show_memory(Memory m)
     }
 }
 
-/**
- * \fn void *new_partition(int nBytes, Memory m)
- * \brief Fonction qui crée une nouvelle partition. Elle sera utilisé après l'allocation d'un espace pour garder le résidu. 
- * */
-void *new_partition(int nBytes, Memory m)
+
+Memory first_fit(Memory m, Process p)
 {
-    Memory p = m, q;
-    int start;
-    if (nBytes > 0)
-    {
-        if (!m)
-            initMemory(nBytes, &m);
-        else
-        {
-            while (p)
-            {
-                q = p;
-                start = p->data.start + p->data.size;
-                p = p->next;
-            }
-            q->next = malloc(sizeof(Partition));
-            q = q->next;
-            q->data.size = nBytes;
-            q->data.state = 'F';
-            q->data.start = start;
-            q->next = NULL;
-        }
-    }
+    while (m && (m->data.state == 'U' || m->data.size < p.size))
+        m = m->next;
     return m;
+}
+
+Memory best_fit(Memory m, Process p)
+{
+    Memory r = first_fit(m, p);
+    m = r;
+    while (m)
+    {
+        if (m->data.state == 'F' && m->data.size >= p.size && m->data.size < r->data.size)
+            r = m;
+        m = m->next;
+    }
+    return r;
+}
+
+Memory worst_fit(Memory m, Process p)
+{
+    Memory r = first_fit(m, p);
+    m = r;
+    while (m)
+    {
+        if (m->data.state == 'F' && m->data.size >= p.size && m->data.size > r->data.size)
+            r = m;
+        m = m->next;
+    }
+    return r;
 }

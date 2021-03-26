@@ -3,9 +3,9 @@ project(Memoire)
 set(CMAKE_C_STANDARD 99)
 
 # Fichiers source
-set(SRCS main.c src/menu.c src/process.c src/memory.c)
+set(SRCS main.c src/menu.c src/memory.c src/process.c src/file_proc.c)
 # Fichers en-tête
-set(HEADERS headers/menu.h headers/process.h headers/memory.h)
+set(HEADERS headers/menu.h headers/memory.h headers/process.h headers/file_proc.h)
 # Librarie ncurses pour l'IHM graphique
 find_package(Curses REQUIRED)
 

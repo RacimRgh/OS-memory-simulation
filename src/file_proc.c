@@ -1,27 +1,35 @@
 #include "../headers/file_proc.h"
 
-void add_proc(Proc_Queue *q, Process p)
+
+Proc_Queue init_queue(Proc_Queue pq)
 {
-    eltQueue *p;
-    p = (eltQueue *)calloc(1, sizeof(eltQueue));
-    p->data = p;
-    p->next = NULL;
-    if (q->head == NULL)
+    pq.head = NULL;
+    pq.rear = NULL;
+    return pq;
+}
+
+void add_proc(Proc_Queue *pq, Process p)
+{
+    eltQueue *q;
+    q = (eltQueue *)calloc(1, sizeof(eltQueue));
+    q->data = p;
+    q->next = NULL;
+    if (pq->head == NULL)
     {
-        q->head = p;
-        q->rear = p;
+        pq->head = q;
+        pq->rear = q;
     }
     else
     {
-        (q->rear)->next = p;
-        q->rear = p;
+        (pq->rear)->next = q;
+        pq->rear = q;
     }
 }
 Process get_proc(Proc_Queue *q)
 {
-    Process p = q.head->data;
+    Process p = q->head->data;
     eltQueue *l;
-    l = q.head;
+    l = q->head;
     q->head = q->head->next;
     free(l);
     return p;
@@ -30,12 +38,28 @@ Process get_proc(Proc_Queue *q)
 Proc_Queue create_queue(FILE *f)
 {
     Process p;
-    Proc_Queue f = {0};
+    Proc_Queue pq = {0};
 
     while (fscanf(f, "%d %d %d %d", &p.id, &p.time, &p.startTime, &p.size) != EOF)
     {
-        add_proc(&f, x);
+        add_proc(&pq, p);
     }
 
-    return f;
+    return pq;
+}
+
+void display_queue(Proc_Queue pq, int t)
+{
+    eltQueue *p = pq.head;
+    int i = 0;
+    wattron(stdscr, A_BOLD);
+    mvprintw(0, t, "ID\t|SIZE\t|TIME\t|DELAY");
+    wattroff(stdscr, A_BOLD);
+    while (p)
+    {
+        mvprintw(1 + i * 2, t, "%d \t%d \t%d \t%d", i + 1, p->data.id, p->data.size, p->data.startTime, p->data.time);
+        p = p->next;
+        i = i + 1;
+    }
+    refresh();
 }

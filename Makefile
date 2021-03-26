@@ -163,6 +163,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/Memoire.dir/build.make CMakeFiles/Memoire.dir/main.c.s
 .PHONY : main.c.s
 
+src/file_proc.o: src/file_proc.c.o
+
+.PHONY : src/file_proc.o
+
+# target to build an object file
+src/file_proc.c.o:
+	$(MAKE) -f CMakeFiles/Memoire.dir/build.make CMakeFiles/Memoire.dir/src/file_proc.c.o
+.PHONY : src/file_proc.c.o
+
+src/file_proc.i: src/file_proc.c.i
+
+.PHONY : src/file_proc.i
+
+# target to preprocess a source file
+src/file_proc.c.i:
+	$(MAKE) -f CMakeFiles/Memoire.dir/build.make CMakeFiles/Memoire.dir/src/file_proc.c.i
+.PHONY : src/file_proc.c.i
+
+src/file_proc.s: src/file_proc.c.s
+
+.PHONY : src/file_proc.s
+
+# target to generate assembly for a file
+src/file_proc.c.s:
+	$(MAKE) -f CMakeFiles/Memoire.dir/build.make CMakeFiles/Memoire.dir/src/file_proc.c.s
+.PHONY : src/file_proc.c.s
+
 src/memory.o: src/memory.c.o
 
 .PHONY : src/memory.o
@@ -257,6 +284,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/file_proc.o"
+	@echo "... src/file_proc.i"
+	@echo "... src/file_proc.s"
 	@echo "... src/memory.o"
 	@echo "... src/memory.i"
 	@echo "... src/memory.s"

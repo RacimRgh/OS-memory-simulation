@@ -4,18 +4,27 @@
 #include "./headers/file_proc.h"
 #include <stdio.h>
 
-#define SIZE_MAIN_MENU 8
+#define SIZE_MAIN_MENU 9
 #define SIZE_FIT_MENU 3
+#define SIZE_METHOD_MENU 3
+
+char *allocation_method[] =
+{
+    "Gestion de processus.",
+    "Allocation de mémoire.",
+    "Pagination."
+};
+
 char *main_menu[] =
 {
     "0- Initialiser la mémoire avec le fichier 'memory.txt'.",
-    "1- Initialiser mémoire manuellement.",
+    "1- Initialiser la mémoire manuellement.",
     "2- Afficher la mémoire.",
     "3- Initialiser la file de processus depuis le fichier 'proc_queue'.",
     "4- Afficher la pile de processus.",
     "5- Charger tout les processus.",
     "6- Charger les processus un par un.",
-    "7- Allouer un espace",
+    "7- Allouer un espace.",
     "8- Quitter."
 };
 
@@ -157,6 +166,7 @@ void main(int argc, char* argv[])
         case 8:
         {
             choice = -1;
+            message("Au revoir!", 10, 10);
             break;
         }
 

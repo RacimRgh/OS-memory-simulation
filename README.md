@@ -19,11 +19,11 @@ The goal is purely academic, the project can be used to demonstrate memory usage
 ## How to build
 
 - cmake -G "Unix Makefiles" -B/build/
-- make
+- make -C build/
 
 ## How to run (TBD)
 
-- ./Memory
+- ./build/Memoire
 
 ## Documentation (TBD)
 

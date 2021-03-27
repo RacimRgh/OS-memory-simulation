@@ -25,6 +25,7 @@ void add_proc(Proc_Queue *pq, Process p)
         pq->rear = q;
     }
 }
+
 Process get_proc(Proc_Queue *q)
 {
     Process p = q->head->data;

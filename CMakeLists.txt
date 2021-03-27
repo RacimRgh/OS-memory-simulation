@@ -3,9 +3,9 @@ project(Memoire)
 set(CMAKE_C_STANDARD 99)
 
 # Fichiers source
-set(SRCS main.c src/menu.c src/memory.c src/process.c src/file_proc.c)
+set(SRCS main.c src/menu.c src/memory.c src/process.c src/file_proc.c src/execution_modes.c)
 # Fichers en-tête
-set(HEADERS headers/menu.h headers/memory.h headers/process.h headers/file_proc.h)
+set(HEADERS headers/menu.h headers/memory.h headers/process.h headers/file_proc.h headers/execution_modes.h)
 # Librarie ncurses pour l'IHM graphique
 find_package(Curses REQUIRED)
 
@@ -31,6 +31,8 @@ if(DOXYGEN_FOUND)
   )
 endif(DOXYGEN_FOUND)
 
+#Put the executable in the same folder as the file (not in build/)
+set(EXECUTABLE_OUTPUT_PATH ../)
 include_directories(${CURSES_INCLUDE_DIR})
 add_executable(Memoire ${SRCS} ${HEADERS})
 target_link_libraries(Memoire ${CURSES_LIBRARIES})

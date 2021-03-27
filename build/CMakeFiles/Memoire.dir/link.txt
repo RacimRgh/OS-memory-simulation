@@ -1,1 +1,0 @@
-/usr/bin/cc    CMakeFiles/Memoire.dir/main.c.o CMakeFiles/Memoire.dir/src/menu.c.o CMakeFiles/Memoire.dir/src/memory.c.o CMakeFiles/Memoire.dir/src/process.c.o CMakeFiles/Memoire.dir/src/file_proc.c.o  -o Memoire  -lcurses /usr/lib/x86_64-linux-gnu/libform.so 

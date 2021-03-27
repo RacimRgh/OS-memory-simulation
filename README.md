@@ -23,7 +23,9 @@ The goal is purely academic, the project can be used to demonstrate memory usage
 
 ## How to run (TBD)
 
-- ./build/Memoire
+- Interactive mode: ./Memoire -i
+- Command line mode: 
+- Using a config file: ./Memoire -f <configFile>
 
 ## Documentation (TBD)
 

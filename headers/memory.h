@@ -6,13 +6,32 @@
 #ifndef MEMORY_HEADER
 #define MEMORY_HEADER
 
-#include "process.h"
+// #include "process.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <curses.h>
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
+
+
+// typedef struct Process Process;
+
+// typedef struct Process Process;
+
+
+/**
+* \struct Process
+* \brief Structure d'un processus à insérer dans une partition
+* */
+typedef struct Process
+{
+    int id;
+    int time;
+    int startTime;
+    int size;
+    int priority;
+} Process;
 
 /**
 * \struct Partition
@@ -41,13 +60,9 @@ typedef elt *Memory;
 int initMemoryWpartitions(int nBytes, Memory *m);
 int initMemory(int nBytes, Memory *m);
 void *myAlloc(int nBytes, Memory m);
-void *myAllocProc(int nBytes, Memory m, Process p, Memory (*fit_function_pointer)(Memory, Process));
 void new_partition(int nBytes, Memory *m, Memory address);
 int myfree(void *p);
 int freeMemory();
 void show_memory(Memory m);
-Memory first_fit(Memory m, Process p);
-Memory best_fit(Memory m, Process p);
-Memory worst_fit(Memory m, Process p);
 
 #endif

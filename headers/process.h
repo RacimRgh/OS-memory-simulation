@@ -5,19 +5,12 @@
 
 #ifndef PROCESS_HEADER
 #define PROCESS_HEADER
-// #include "memory.h"
+#include "memory.h"
 
-/**
-* \struct Process
-* \brief Structure d'un processus à insérer dans une partition
-* */
-typedef struct Process
-{
-    int id;
-    int time;
-    int startTime;
-    int size;
-    int priority;
-} Process;
+void *myAllocProc(int nBytes, Memory m, Process p, Memory (*fit_function_pointer)(Memory, Process));
+Memory first_fit(Memory m, Process p);
+Memory best_fit(Memory m, Process p);
+Memory worst_fit(Memory m, Process p);
+
 
 #endif

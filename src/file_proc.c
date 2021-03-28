@@ -41,7 +41,7 @@ Proc_Queue create_queue(FILE *f)
     Process p;
     Proc_Queue pq = {0};
 
-    while (fscanf(f, "%d %d %d %d", &p.id, &p.time, &p.startTime, &p.size) != EOF)
+    while (fscanf(f, "%d %d %d %d", &p.id, &p.size, &p.startTime, &p.time) != EOF)
     {
         add_proc(&pq, p);
     }
@@ -49,16 +49,16 @@ Proc_Queue create_queue(FILE *f)
     return pq;
 }
 
-void display_queue(Proc_Queue pq, int t)
+void display_queue(Proc_Queue pq, int y, int x)
 {
     eltQueue *p = pq.head;
-    int i = 0;
+    int i = y;
     wattron(stdscr, A_BOLD);
-    mvprintw(0, t, "ID\t|SIZE\t|TIME\t|DELAY");
+    mvprintw(y, x, "ID\t|Taille\t|Temps d'arrivee|Temps d'exe");
     wattroff(stdscr, A_BOLD);
     while (p)
     {
-        mvprintw(1 + i * 2, t, "%d \t%d \t%d \t%d", i + 1, p->data.id, p->data.size, p->data.startTime, p->data.time);
+        mvprintw(1 + i, x, "%d \t%d \t%d \t%d", p->data.id, p->data.size, p->data.startTime, p->data.time);
         p = p->next;
         i = i + 1;
     }

@@ -1,0 +1,11 @@
+# Mémoire: Adresse - taille - état
+0 320 F
+320 800 U
+1200 400 F
+1600 200 U
+1800 750 F
+# Allocations: id - temps d'exe - Taille - politique(worst, best, first) 
+452 2 102 first
+125 1 250 best
+856 8 750 worst
+# fin

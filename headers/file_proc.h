@@ -25,6 +25,6 @@ Proc_Queue init_queue(Proc_Queue pq);
 void add_proc(Proc_Queue *pq, Process p);
 Process get_proc(Proc_Queue *q);
 Proc_Queue create_queue(FILE *f);
-void display_queue(Proc_Queue pq, int t);
+void display_queue(Proc_Queue pq, int y, int x);
 
 #endif

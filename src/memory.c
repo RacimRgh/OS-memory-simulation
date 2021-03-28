@@ -43,7 +43,7 @@ int initMemoryWpartitions(int nBytes, Memory *m)
     Partition x;
     int taille = 0;
     FILE *f = NULL;
-    f = fopen("./input_files/memory.txt", "r");
+    f = fopen("./config_files/memory.txt", "r");
 
     if (f)
     {

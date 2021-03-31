@@ -13,12 +13,11 @@
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
-
-
-// typedef struct Process Process;
+#include "menu.h"
 
 // typedef struct Process Process;
 
+// typedef struct Process Process;
 
 /**
 * \struct Process
@@ -57,12 +56,13 @@ typedef struct elt
 typedef elt *Memory;
 
 //------------- PROTOTYPES ---------------//
-int initMemoryWpartitions(int nBytes, Memory *m);
+int initMemoryFile(int nBytes, Memory *m);
 int initMemory(int nBytes, Memory *m);
 void *myAlloc(int nBytes, Memory m);
 void new_partition(int nBytes, Memory *m, Memory address);
-int myfree(void *p);
+int myfree(Memory m);
 int freeMemory();
+int myRealloc(Memory *m);
 void show_memory(Memory m);
 
 #endif

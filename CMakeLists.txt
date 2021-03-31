@@ -31,8 +31,12 @@ if(DOXYGEN_FOUND)
   )
 endif(DOXYGEN_FOUND)
 
+# pthreads
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 #Put the executable in the same folder as the file (not in build/)
 set(EXECUTABLE_OUTPUT_PATH ../)
 include_directories(${CURSES_INCLUDE_DIR})
 add_executable(Memoire ${SRCS} ${HEADERS})
-target_link_libraries(Memoire ${CURSES_LIBRARIES})
+target_link_libraries(Memoire PRIVATE Threads::Threads ${CURSES_LIBRARIES})

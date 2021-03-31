@@ -6,6 +6,8 @@
 #include "file_proc.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <pthread.h>
 
 #define SIZE_MAIN_MENU 9
 #define SIZE_FIT_MENU 3
@@ -17,6 +19,7 @@ extern char *main_menu[];
 
 extern char *fit_menu[];
 
+void *check_processes();
 void interactive_menu();
 void config_file(char* file); 
 

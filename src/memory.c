@@ -32,15 +32,16 @@ int initMemory(int nBytes, Memory *m)
         return 0;
 }
 /**
- * \fn int initMemoryWpartitions (int nBytes)
+ * \fn int initMemoryFile (int nBytes)
  * \brief Fonction d'initiation de la RAM à partir d'un fichier qui contient des partitions
  * \param nBytes nombre d'octets max à allouer
  * \return 0 en cas d'erreur, la taille allouée sinon
  * */
-int initMemoryWpartitions(int nBytes, Memory *m)
+int initMemoryFile(int nBytes, Memory *m)
 {
     Memory l = NULL, p = NULL, q = NULL;
     Partition x;
+    Process pr;
     int taille = 0;
     FILE *f = NULL;
     f = fopen("./config_files/memory.txt", "r");
@@ -50,12 +51,12 @@ int initMemoryWpartitions(int nBytes, Memory *m)
         while (fscanf(f, "%d %d %c", &x.start, &x.size, &x.state) != EOF && taille < nBytes)
         {
             taille += x.size; //la taille de la ram
-
             if (!l)
             {
                 /* Première partition */
                 l = (Memory)calloc(1, sizeof(Partition));
                 l->data = x;
+                l->data.proc.id = 0;
                 p = l;
                 q = l;
             }
@@ -64,6 +65,7 @@ int initMemoryWpartitions(int nBytes, Memory *m)
                 /* Liste des partitions*/
                 q = (Memory)calloc(1, sizeof(Partition));
                 q->data = x;
+                q->data.proc.id = 0;
                 p->next = q;
                 p = q;
             }
@@ -88,7 +90,6 @@ int initMemoryWpartitions(int nBytes, Memory *m)
  * */
 void *myAlloc(int nBytes, Memory m)
 {
-    
 }
 
 /**
@@ -110,7 +111,7 @@ void new_partition(int nBytes, Memory *m, Memory address)
             q->data.state = 'F';
             q->data.start = (*m)->data.size;
         }
-            // initMemory(nBytes, &m);
+        // initMemory(nBytes, &m);
         else
         {
             q = malloc(sizeof(Partition));
@@ -129,8 +130,11 @@ void new_partition(int nBytes, Memory *m, Memory address)
  * \param p pointeur sur la partition à récupérer  
  * \return -1 en cas d'erreur, la taille récupérée sinon
  * */
-int myfree(void *p)
+int myfree(Memory m)
 {
+    // Memory m = (Memory)p;
+    free(m);
+    m = NULL;
     return 0;
 }
 
@@ -141,6 +145,71 @@ int myfree(void *p)
  * */
 int freeMemory()
 {
+    return 0;
+}
+
+/**
+ * \fn int freeMemory()
+ * \brief Fonction de récupération de la mémoire alloué par initMemory ou initMemoryWpartition  
+ * \return -1 en cas d'erreur, la taille récupérée sinon
+ * */
+int myRealloc(Memory *m)
+{
+    Memory l = *m, q, p;
+    Memory r;
+    // m = (Memory)m;
+    p = *m;
+    l = l->next;
+    r = *m;
+    int total_size = 0;
+    while (l != NULL)
+    {
+        if (l->data.state == 'F')
+        {
+            total_size += l->data.size;
+            if (p == *m)
+            {
+                message("here1", 10, 20);
+                *m = (*m)->next;
+                q = p;
+                p = *m;
+                l = p->next;
+                free(q);
+            }
+            else
+            {
+                q = l;
+                p->next = q->next;
+                free(l);
+                l = p->next;
+                message("here2", 20, 20);
+            }
+        }
+        else
+        {
+            message("here3", 25, 20);
+            l = l->next;
+            p = p->next;
+        }
+    }
+    getch();
+    l = *m;
+    int address = 0;
+    while (l->next)
+    {
+        l->data.start = address;
+        address += l->data.size;
+        l = l->next;
+    }
+    while (total_size > 1000)
+    {
+        total_size = total_size - 1000;
+        new_partition(1000, &r, l);
+    }
+    if (total_size > 0)
+        new_partition(total_size, &r, l);
+
+    *m = r;
     return 0;
 }
 

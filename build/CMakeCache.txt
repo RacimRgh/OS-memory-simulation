@@ -327,6 +327,10 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=
+//Have include pthread.h
+CMAKE_HAVE_PTHREAD_H:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation
@@ -408,6 +412,8 @@ DOXYGEN_EXECUTABLE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_Curses:INTERNAL=[/usr/lib/x86_64-linux-gnu/libcurses.so][/usr/include][v()]
 //Details about finding Doxygen
 FIND_PACKAGE_MESSAGE_DETAILS_Doxygen:INTERNAL=[/usr/local/bin/doxygen][cfound components: doxygen missing components: dot][v1.9.2 (9136e8c664bc4b0706a9cf419c76b2277b87f4a1*)()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 NCURSES_CFLAGS:INTERNAL=-D_DEFAULT_SOURCE;-D_XOPEN_SOURCE=600
 NCURSES_CFLAGS_I:INTERNAL=
 NCURSES_CFLAGS_OTHER:INTERNAL=-D_DEFAULT_SOURCE;-D_XOPEN_SOURCE=600
@@ -445,6 +451,8 @@ NCURSES_ncurses_PREFIX:INTERNAL=
 NCURSES_ncurses_VERSION:INTERNAL=
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+//Result of TRY_COMPILE
+THREADS_HAVE_PTHREAD_ARG:INTERNAL=TRUE
 __pkg_config_arguments_NCURSES:INTERNAL=QUIET;ncurses
 __pkg_config_checked_NCURSES:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_NCURSES_ncurses

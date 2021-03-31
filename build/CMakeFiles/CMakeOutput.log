@@ -459,3 +459,17 @@ Parsed CXX implicit link information from above output:
   implicit fwks: []
 
 
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_84d0f/fast && /usr/bin/make -f CMakeFiles/cmTC_84d0f.dir/build.make CMakeFiles/cmTC_84d0f.dir/build
+make[1]: Entering directory '/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_84d0f.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -std=gnu99 -o CMakeFiles/cmTC_84d0f.dir/CheckIncludeFile.c.o   -c /media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_84d0f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_84d0f.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_84d0f.dir/CheckIncludeFile.c.o  -o cmTC_84d0f 
+make[1]: Leaving directory '/media/racimrgh/Windows-SSD/Users/racim/OneDrive/Documents/L3-CERGY/S2/OS/projets/OS-memory-simulation/build/CMakeFiles/CMakeTmp'
+
+
+

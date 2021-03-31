@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <curses.h>
+#include <time.h>
 
 /**
 * \struct Proc_Queue

@@ -1,38 +1,59 @@
 #include "../headers/execution_modes.h"
 
 char *allocation_method[] =
-{
-    "Gestion de processus.",
-    "Allocation de mémoire.",
-    "Pagination."
-};
+    {
+        "Gestion de processus.",
+        "Allocation de mémoire.",
+        "Pagination."};
 
 char *main_menu[] =
-{
-    "0- Initialiser la mémoire avec le fichier 'memory.txt'.",
-    "1- Initialiser la mémoire en donnant une taille.",
-    "2- Afficher la mémoire.",
-    "3- Initialiser la file de processus depuis le fichier 'proc_queue'.",
-    "4- Afficher la pile de processus.",
-    "5- Charger les processus un par un.",
-    "6- Allouer un espace.",
-    "7- Quitter."
-};
+    {
+        "0- Initialiser la mémoire avec le fichier 'memory.txt'.",
+        "1- Initialiser la mémoire en donnant une taille.",
+        "2- Afficher la mémoire.",
+        "3- Initialiser la file de processus depuis le fichier 'proc_queue'.",
+        "4- Afficher la pile de processus.",
+        "5- Charger les processus un par un.",
+        "6- Realloc.",
+        "7- Free memory.",
+        "8- Quitter."};
 
-char *fit_menu[] = 
-{
-    "First fit",
-    "Best fit",
-    "Worst fit"
-};
+char *fit_menu[] =
+    {
+        "First fit",
+        "Best fit",
+        "Worst fit"};
 
+void *check_processes(void *arg)
+{
+    time_t t;
+    Memory m = (Memory)arg, l;
+    while (1)
+    {
+        l = m;
+        t = time(NULL);
+        sleep(1);
+        while (l)
+        {
+            if (l->data.state == 'U' && l->data.proc.id != 0 && t - l->data.proc.startTime >= l->data.proc.time)
+            {
+
+                l->data.state = 'F';
+                l->data.proc.id = 0;
+                show_memory(m);
+                refresh();
+            }
+            l = l->next;
+        }
+    }
+}
 void interactive_menu()
 {
-    Proc_Queue pq ;
+    Proc_Queue pq;
     Process p;
-    Memory m = NULL, l;
+    Memory l, m = NULL, mem;
     Memory (*fit_function_pointer)(Memory, Process) = NULL;
-    char* proc = (char*)malloc(40 * sizeof(char));
+    char *proc = (char *)malloc(40 * sizeof(char));
     pq = init_queue(pq);
     initscr();
     noecho();
@@ -42,6 +63,8 @@ void interactive_menu()
     getch();
     int init = 0;
     int choice, fit_choice;
+    pid_t pid;
+    pthread_t thread_id;
     do
     {
         choice = menu(2, main_menu, SIZE_MAIN_MENU, "Menu principal");
@@ -50,14 +73,17 @@ void interactive_menu()
         {
         case 0:
         {
-            init = initMemoryWpartitions(10000, &m);
+            init = initMemoryFile(10000, &m);
+            mem = m;
             message("Mémoire initialisé depuis le fichier memory.txt!", 10, 10);
+            // pid = fork();
+            pthread_create(&thread_id, NULL, check_processes, mem);
             getch();
             break;
         }
         case 1:
         {
-            init = initMemory(10000, &m);
+            init = initMemory(10000, &mem);
             message("Mémoire initialisé!", 10, 10);
             getch();
             break;
@@ -66,7 +92,7 @@ void interactive_menu()
         {
             if (init)
             {
-                show_memory(m);
+                show_memory(mem);
             }
             else
                 message("Initialisez d'abord la mémoire!", 10, 10);
@@ -80,7 +106,7 @@ void interactive_menu()
             f = fopen("./config_files/proc_queue.txt", "r");
             pq = create_queue(f);
             message("File initialisé!", 10, 10);
-            getch();       
+            getch();
             break;
         }
         case 4:
@@ -94,20 +120,20 @@ void interactive_menu()
         }
         case 5:
         {
-            if(!init && pq.head == NULL)
+            if (!init && pq.head == NULL)
             {
                 message("Initialisez d'abord la mémoire!", 10, 10);
                 message("Initialisez d'abord la file de processus!", 20, 10);
                 getch();
                 break;
             }
-            if(!init)
+            if (!init)
             {
                 message("Initialisez d'abord la mémoire!", 10, 10);
                 getch();
                 break;
             }
-            if(pq.head == NULL)
+            if (pq.head == NULL)
             {
                 message("Initialisez d'abord la file de processus!", 10, 10);
                 getch();
@@ -115,8 +141,8 @@ void interactive_menu()
             }
 
             p = get_proc(&pq);
-            sprintf(proc, "id: %d - Taille: %d - Duree: %d - Début: %d", p.id, p.size, p.time, p.startTime);   
-            message(proc, 10,10);
+            sprintf(proc, "id: %d - Taille: %d - Duree: %d - Début: %d", p.id, p.size, p.time, p.startTime);
+            message(proc, 10, 10);
             fit_choice = menu(2, fit_menu, SIZE_FIT_MENU, "Choix de la politique d'allocation");
             switch (fit_choice)
             {
@@ -132,15 +158,21 @@ void interactive_menu()
             default:
                 break;
             }
-            m = (Memory)myAllocProc(p.size, m, p, fit_function_pointer);
+            mem = (Memory)myAllocProc(p.size, mem, p, fit_function_pointer);
             // display_queue(pq, 1);
-            show_memory(m);
+            show_memory(mem);
 
             getch();
             break;
         }
         case 6:
         {
+            myRealloc(&mem);
+            break;
+        }
+        case 7:
+        {
+            myfree(m);
             break;
         }
         case 8:
@@ -165,7 +197,7 @@ void interactive_menu()
     endwin();
 }
 
-void config_file(char* file)
+void config_file(char *file)
 {
     FILE *f = NULL;
     Process pr;
@@ -173,16 +205,16 @@ void config_file(char* file)
     Proc_Queue pq = {0};
     Memory (*fit_function_pointer)(Memory, Process) = NULL;
     Memory m = NULL, l = NULL, p = NULL, q = NULL;
-    char* proc = (char*)malloc(40 * sizeof(char));
+    char *proc = (char *)malloc(40 * sizeof(char));
     pq = init_queue(pq);
-    char* alloc_method = (char*)malloc(5 * sizeof(char));
+    char *alloc_method = (char *)malloc(5 * sizeof(char));
     char line[256];
     int linenum = 0;
     char destination[] = "./config_files/";
     strcat(destination, file);
     f = fopen(destination, "r");
     fgets(line, 256, f);
-    if(line[0] != '#')
+    if (line[0] != '#')
     {
         puts("Fichier pas bien formatté, réessayez");
     }
@@ -191,11 +223,12 @@ void config_file(char* file)
     cbreak();
     refresh();
     getch();
-    while(fgets(line, 256, f) != NULL)
-    {   
+    while (fgets(line, 256, f) != NULL)
+    {
         linenum++;
-        if(line[0] == '#') break;
-        if(sscanf(line, "%d %d %c", &x.start, &x.size, &x.state) != 3)
+        if (line[0] == '#')
+            break;
+        if (sscanf(line, "%d %d %c", &x.start, &x.size, &x.state) != 3)
         {
             fprintf(stderr, "Syntax error, line %d\n", linenum);
             continue;
@@ -222,11 +255,12 @@ void config_file(char* file)
     show_memory(m);
     getch();
     /* ----------------------------------- */
-    while(fgets(line, 256, f) != NULL)
+    while (fgets(line, 256, f) != NULL)
     {
         linenum++;
-        if(line[0] == '#') break;
-        if(sscanf(line, "%d %d %d %s", &pr.id, &pr.time, &pr.size, alloc_method) != 4)
+        if (line[0] == '#')
+            break;
+        if (sscanf(line, "%d %d %d %s", &pr.id, &pr.time, &pr.size, alloc_method) != 4)
         {
             fprintf(stderr, "Syntax error, line %d", linenum);
             continue;
@@ -239,17 +273,21 @@ void config_file(char* file)
         message(alloc_method, 20, 10);
         pr = get_proc(&pq);
         getch();
-        
-        if(!strcmp("best fit.", alloc_method)) fit_function_pointer = &(best_fit);
-        else if (!strcmp("worst fit.", alloc_method)) fit_function_pointer = &(worst_fit);
-        else if (!strcmp("first fit.", alloc_method)) fit_function_pointer = &(first_fit);
-        else continue;
+
+        if (!strcmp("best fit.", alloc_method))
+            fit_function_pointer = &(best_fit);
+        else if (!strcmp("worst fit.", alloc_method))
+            fit_function_pointer = &(worst_fit);
+        else if (!strcmp("first fit.", alloc_method))
+            fit_function_pointer = &(first_fit);
+        else
+            continue;
         m = (Memory)myAllocProc(pr.size, m, pr, fit_function_pointer);
         show_memory(m);
         getch();
         refresh();
     }
-    
+
     getch();
     endwin();
 }

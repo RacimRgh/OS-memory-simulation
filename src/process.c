@@ -21,7 +21,7 @@ void *myAllocProc(int nBytes, Memory m, Process p, Memory (*fit_function_pointer
         {
             address->data.state = 'U';
             address->data.proc = p;
-            address->data.proc.time += time(NULL);
+            address->data.proc.startTime = time(NULL);
             diff = address->data.size - p.size;
             address->data.size = p.size;
             new_partition(diff, &m, address);
@@ -64,5 +64,4 @@ Memory worst_fit(Memory m, Process p)
 }
 
 // #endif
-
 

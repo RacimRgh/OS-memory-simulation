@@ -43,6 +43,7 @@ Proc_Queue create_queue(FILE *f)
 
     while (fscanf(f, "%d %d %d %d", &p.id, &p.size, &p.startTime, &p.time) != EOF)
     {
+        // p.startTime = time(NULL);
         add_proc(&pq, p);
     }
 

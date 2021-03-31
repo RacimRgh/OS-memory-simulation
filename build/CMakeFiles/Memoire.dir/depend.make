@@ -17,16 +17,19 @@ CMakeFiles/Memoire.dir/src/execution_modes.c.o: ../src/execution_modes.c
 
 CMakeFiles/Memoire.dir/src/file_proc.c.o: ../headers/file_proc.h
 CMakeFiles/Memoire.dir/src/file_proc.c.o: ../headers/memory.h
+CMakeFiles/Memoire.dir/src/file_proc.c.o: ../headers/menu.h
 CMakeFiles/Memoire.dir/src/file_proc.c.o: ../headers/process.h
 CMakeFiles/Memoire.dir/src/file_proc.c.o: ../src/file_proc.c
 
 CMakeFiles/Memoire.dir/src/memory.c.o: ../headers/memory.h
+CMakeFiles/Memoire.dir/src/memory.c.o: ../headers/menu.h
 CMakeFiles/Memoire.dir/src/memory.c.o: ../src/memory.c
 
 CMakeFiles/Memoire.dir/src/menu.c.o: ../headers/menu.h
 CMakeFiles/Memoire.dir/src/menu.c.o: ../src/menu.c
 
 CMakeFiles/Memoire.dir/src/process.c.o: ../headers/memory.h
+CMakeFiles/Memoire.dir/src/process.c.o: ../headers/menu.h
 CMakeFiles/Memoire.dir/src/process.c.o: ../headers/process.h
 CMakeFiles/Memoire.dir/src/process.c.o: ../src/process.c
 

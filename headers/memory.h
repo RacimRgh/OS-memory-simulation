@@ -25,11 +25,10 @@
 * */
 typedef struct Process
 {
-    int id;
-    int time;
-    int startTime;
-    int size;
-    int priority;
+    int id;        /*!< Id du processus, il est utilisé pour identifier la partition occupée*/
+    int time;      /*!< Temps d'exécution du processus*/
+    int startTime; /*!< Temps de démarrage de l'exécution du processus*/
+    int size;      /*!< Taille en octets du processus*/
 } Process;
 
 /**
@@ -58,11 +57,13 @@ typedef elt *Memory;
 //------------- PROTOTYPES ---------------//
 int initMemoryFile(int nBytes, Memory *m);
 int initMemory(int nBytes, Memory *m);
-void *myAlloc(int nBytes, Memory m);
+void *myAlloc(int nBytes, Memory m, Memory (*fit_function_pointer)(Memory, int));
 void new_partition(int nBytes, Memory *m, Memory address);
-int myfree(Memory m);
-int freeMemory();
+int myfree(void *m, Memory p);
+int freeMemory(void *m);
 int myRealloc(Memory *m);
 void show_memory(Memory m);
-
+Memory first_fit(Memory m, int nBytes);
+Memory best_fit(Memory m, int nBytes);
+Memory worst_fit(Memory m, int nBytes);
 #endif

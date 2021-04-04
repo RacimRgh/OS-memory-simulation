@@ -19,6 +19,8 @@ extern char *main_menu[];
 
 extern char *fit_menu[];
 
+void test();
+void cmd(int argc, char* argv[]);
 void *check_processes();
 void interactive_menu();
 void config_file(char* file); 

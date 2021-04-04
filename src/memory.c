@@ -3,34 +3,65 @@
  * @author Racim Righi et Lydia Trabelsi
  * @brief Fichier qui contient les implémentations des fonctions qui concernent la mémoire simulée
  * */
-// #ifndef MEMORY_SRC
-// #define MEMORY_SRC
 #include "../headers/memory.h"
 
 /**
  * \fn int initMemory (int nBytes)
- * \brief Fonction d'initiation de la RAM
+ * \brief Fonction d'initiation de la RAM avec une taille donnée
  * \param nBytes nombre d'octets à allouer
  * \return 0 en cas d'erreur, la taille allouée sinon
  * */
 int initMemory(int nBytes, Memory *m)
 {
-    Memory l = NULL;
+    Memory l = NULL, p = NULL, q = NULL;
     Partition x;
-    l = (Memory)calloc(1, sizeof(Partition));
-    if (l)
+    Process pr;
+    int taille = nBytes;
+    int address = 0;
+
+    while (nBytes > 500)
     {
-        x.size = nBytes;
-        x.start = 0;
-        x.state = 'F';
-        l->data = x;
-        l->next = NULL;
-        *m = l;
-        return nBytes;
+        if (!l)
+        {
+            /* Première partition */
+            l = (Memory)calloc(1, sizeof(Partition));
+            l->data.proc.id = 0;
+            l->data.size = 500;
+            l->data.start = address;
+            l->data.state = 'F';
+            p = l;
+            q = l;
+        }
+        else
+        {
+            /* Liste des partitions*/
+            q = (Memory)calloc(1, sizeof(Partition));
+            q->data.proc.id = 0;
+            q->data.size = 500;
+            q->data.start = address;
+            q->data.state = 'F';
+            p->next = q;
+            p = q;
+        }
+        address += 500;
+        nBytes = nBytes - 500;
     }
-    else
-        return 0;
+    if (nBytes > 0)
+    {
+        /* Liste des partitions*/
+        q = (Memory)calloc(1, sizeof(Partition));
+        q->data.proc.id = 0;
+        q->data.size = nBytes;
+        q->data.state = 'F';
+        q->data.start = address;
+        p->next = q;
+        p = q;
+    }
+    q->next = NULL;
+    *m = l;
+    return taille;
 }
+
 /**
  * \fn int initMemoryFile (int nBytes)
  * \brief Fonction d'initiation de la RAM à partir d'un fichier qui contient des partitions
@@ -88,8 +119,25 @@ int initMemoryFile(int nBytes, Memory *m)
  * \param nBytes nombre d'octets de la partition
  * \return -1 en cas d'erreur, la taille allouée sinon
  * */
-void *myAlloc(int nBytes, Memory m)
+void *myAlloc(int nBytes, Memory m, Memory (*fit_function_pointer)(Memory, int))
 {
+    Memory address = fit_function_pointer(m, nBytes);
+    int diff;
+    if (address)
+    {
+        if (address->data.state != 'F')
+            puts("Erreur adresse renvoyée non libre");
+        else
+        {
+            address->data.state = 'U';
+            address->data.proc.id = 0;
+            address->data.proc.startTime = time(NULL);
+            diff = address->data.size - nBytes;
+            address->data.size = nBytes;
+            new_partition(diff, &m, address);
+        }
+    }
+    return m;
 }
 
 /**
@@ -130,11 +178,14 @@ void new_partition(int nBytes, Memory *m, Memory address)
  * \param p pointeur sur la partition à récupérer  
  * \return -1 en cas d'erreur, la taille récupérée sinon
  * */
-int myfree(Memory m)
+int myfree(void *m, Memory p)
 {
-    // Memory m = (Memory)p;
-    free(m);
-    m = NULL;
+    Memory l = (Memory)m;
+    while(l->next!=p)
+        l = l->next;
+    
+    l->next = p->next;
+    free(p);
     return 0;
 }
 
@@ -143,8 +194,9 @@ int myfree(Memory m)
  * \brief Fonction de récupération de la mémoire alloué par initMemory ou initMemoryWpartition  
  * \return -1 en cas d'erreur, la taille récupérée sinon
  * */
-int freeMemory()
-{
+int freeMemory(void *m)
+{   
+    free(m);
     return 0;
 }
 
@@ -257,6 +309,53 @@ void show_memory(Memory m)
         printf("Your terminal does not support color\n");
         exit(1);
     }
+}
+
+/**
+ * \fn Memory first_fit(Memory m, int nBytes)
+ * \brief La première partition libre et assez grande pour accueillir le processus/zone sera choisie.
+ * */
+Memory first_fit(Memory m, int nBytes)
+{
+    while (m && (m->data.state == 'U' || m->data.size < nBytes))
+        m = m->next;
+    return m;
+}
+
+
+/**
+ * \fn Memory best_fit(Memory m, int nBytes)
+ * \brief La partition choisie sera celle qui laissera le moins de résidu possible après l’allocation.
+ * */
+Memory best_fit(Memory m, int nBytes)
+{
+    Memory r = first_fit(m, nBytes);
+    m = r;
+    while (m)
+    {
+        if (m->data.state == 'F' && m->data.size >= nBytes && m->data.size < r->data.size)
+            r = m;
+        m = m->next;
+    }
+    return r;
+}
+
+
+/**
+ * \fn Memory worst_fit(Memory m, int nBytes)
+ * \brief La partition choisie sera celle qui laissera le plus de résidu après l’allocation, ce qui nous permettra d’y allouer d’autres processus/zones après.
+ * */
+Memory worst_fit(Memory m, int nBytes)
+{
+    Memory r = first_fit(m, nBytes);
+    m = r;
+    while (m)
+    {
+        if (m->data.state == 'F' && m->data.size >= nBytes && m->data.size > r->data.size)
+            r = m;
+        m = m->next;
+    }
+    return r;
 }
 
 // #endif

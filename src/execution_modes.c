@@ -24,7 +24,71 @@ char *fit_menu[] =
         "Best fit",
         "Worst fit"};
 
-void *check_processes(void *arg)
+
+/**
+ * \fn void test()
+ * \brief Fonction de test qui permet d'effectuer des allocations désallocations directement.
+ * */
+void test(){
+    Proc_Queue pq;
+    Process p;
+    Memory l, m = NULL, mem;
+    Memory (*fit_function_pointer)(Memory, int) = NULL;
+    printf("Donnez la taille de la mémoire: ");
+    int taille;
+    scanf("%d", &taille);
+    int init = initMemory(taille, &mem);
+    initscr();
+    cbreak();
+    start_color();
+    refresh();
+    show_memory(mem);
+    getch();
+    endwin();
+    int choix = 1;
+    int part = 0;
+    do
+    {
+        printf("\nDonnez la taille de l'allocation à faire (0 pour arrêter): ");
+        scanf("%d", &part);
+        printf("\nDonnez le mode d'allocation(first fit par défaut)");
+        printf("\n1-First fit\n2-Worst fit\n3-Best fit\n");
+        scanf("%d", &choix);
+        switch (choix)
+        {
+        case 1:
+            fit_function_pointer = &(first_fit);
+            break;
+        case 2:
+            fit_function_pointer = &(best_fit);
+            break;
+        case 3:
+            fit_function_pointer = &(worst_fit);
+            break;
+        default:
+            fit_function_pointer = &(first_fit);
+            break;
+        }
+        mem = (Memory)myAlloc(part, mem, fit_function_pointer);
+        show_memory(mem);
+        initscr();
+        cbreak();
+        start_color();
+        refresh();
+        show_memory(mem);
+        getch();
+        endwin();
+
+    } while (part!=0);
+    
+}
+
+/**
+ * \fn void *myFreeProc(void *arg)
+ * \brief Fonction qui vérifie les processus en cours d'exécution, et libère une partition si un des processus a terminé.
+ * \param arg Pointeur générique qui va servir comme mémoire
+ * */
+void *myFreeProc(void *arg)
 {
     time_t t;
     Memory m = (Memory)arg, l;
@@ -47,6 +111,66 @@ void *check_processes(void *arg)
         }
     }
 }
+
+
+
+/**
+ * \fn void interactive_menu()
+ * \brief Mode d'exécution intéractif qui affiche un menu et attend le choix de l'utilisateur
+ * */
+void cmd(int argc, char* argv[])
+{
+    Memory (*fit_function_pointer)(Memory, int) = NULL;
+    Memory mem;
+    int init = initMemory(atoi(argv[2]), &mem);
+    initscr();
+    cbreak();
+    start_color();
+    refresh();
+    show_memory(mem);
+    getch();
+    endwin();
+    int i = 4;
+    int taille;
+    int choix;
+    while(i<argc)
+    {
+        taille = atoi(argv[i]);
+        choix = atoi(argv[i+1]);
+        switch (choix)
+        {
+        case 1:
+            fit_function_pointer = &(first_fit);
+            break;
+        case 2:
+            fit_function_pointer = &(best_fit);
+            break;
+        case 3:
+            fit_function_pointer = &(worst_fit);
+            break;
+        default:
+            fit_function_pointer = &(first_fit);
+            break;
+        }
+        mem = (Memory)myAlloc(taille, mem, fit_function_pointer);
+        show_memory(mem);
+        initscr();
+        cbreak();
+        start_color();
+        refresh();
+        show_memory(mem);
+        getch();
+        endwin();
+        i += 2;
+        myRealloc(&mem);
+    }
+
+}
+
+/**
+ * \fn void interactive_menu()
+ * \brief Mode d'exécution intéractif qui affiche un menu et attend le choix de l'utilisateur
+ * */
 void interactive_menu()
 {
     Proc_Queue pq;
@@ -56,7 +180,7 @@ void interactive_menu()
     char *proc = (char *)malloc(40 * sizeof(char));
     pq = init_queue(pq);
     initscr();
-    noecho();
+    // noecho();
     cbreak();
     start_color();
     refresh();
@@ -77,14 +201,20 @@ void interactive_menu()
             mem = m;
             message("Mémoire initialisé depuis le fichier memory.txt!", 10, 10);
             // pid = fork();
-            pthread_create(&thread_id, NULL, check_processes, mem);
+            pthread_create(&thread_id, NULL, myFreeProc, mem);
             getch();
             break;
         }
         case 1:
         {
-            init = initMemory(10000, &mem);
-            message("Mémoire initialisé!", 10, 10);
+            // Input
+            WINDOW *win = newwin(3, 80, 13, 40);
+            char *input = (char *)malloc(5);
+            message("Donnez une taille en octets: ", 10, 10);
+            wgetnstr(win, input, sizeof(input));
+            int nBytes = atoi(input);
+            init = initMemory(nBytes, &mem);
+            message("Mémoire initialisé!", 20, 10);
             getch();
             break;
         }
@@ -147,15 +277,16 @@ void interactive_menu()
             switch (fit_choice)
             {
             case 0:
-                fit_function_pointer = &(first_fit);
+                fit_function_pointer = &(first_fit_proc);
                 break;
             case 1:
-                fit_function_pointer = &(best_fit);
+                fit_function_pointer = &(best_fit_proc);
                 break;
             case 2:
-                fit_function_pointer = &(worst_fit);
+                fit_function_pointer = &(worst_fit_proc);
                 break;
             default:
+                fit_function_pointer = &(first_fit_proc);
                 break;
             }
             mem = (Memory)myAllocProc(p.size, mem, p, fit_function_pointer);
@@ -172,7 +303,7 @@ void interactive_menu()
         }
         case 7:
         {
-            myfree(m);
+            freeMemory(&mem);
             break;
         }
         case 8:
@@ -197,6 +328,11 @@ void interactive_menu()
     endwin();
 }
 
+
+/**
+ * \fn void config_file(char *file)
+ * \brief Mode d'exécution batch, qui lit un fichier de configuraiton dans le dossier config_files et commence l'exécution pas à pas
+ * */
 void config_file(char *file)
 {
     FILE *f = NULL;
@@ -219,7 +355,7 @@ void config_file(char *file)
         puts("Fichier pas bien formatté, réessayez");
     }
     initscr();
-    noecho();
+    // noecho();
     cbreak();
     refresh();
     getch();
@@ -266,7 +402,6 @@ void config_file(char *file)
             continue;
         }
         pr.startTime = 0;
-        pr.priority = 0;
         add_proc(&pq, pr);
         display_queue(pq, 15, 10);
         strcat(alloc_method, " fit.");
@@ -275,11 +410,11 @@ void config_file(char *file)
         getch();
 
         if (!strcmp("best fit.", alloc_method))
-            fit_function_pointer = &(best_fit);
+            fit_function_pointer = &(best_fit_proc);
         else if (!strcmp("worst fit.", alloc_method))
-            fit_function_pointer = &(worst_fit);
+            fit_function_pointer = &(worst_fit_proc);
         else if (!strcmp("first fit.", alloc_method))
-            fit_function_pointer = &(first_fit);
+            fit_function_pointer = &(first_fit_proc);
         else
             continue;
         m = (Memory)myAllocProc(pr.size, m, pr, fit_function_pointer);
